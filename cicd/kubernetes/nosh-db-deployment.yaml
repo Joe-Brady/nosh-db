@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nosh-db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nosh-db
+  replicas: 1
+  template:
+    metadata:
+      name: nosh-db-pod
+      labels:
+        app: nosh-db
+        version: "1.0.0"
+    spec:
+      containers:
+        - name: nosh-db-container
+          image: postgres
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: nosh-db-configmap
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-volume
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 100m
+            limits:
+              memory: 128Mi
+              cpu: 250m
+      volumes:
+        - name: postgres-volume
+          persistentVolumeClaim:
+            claimName: nosh-db-persistentvolumeclaim

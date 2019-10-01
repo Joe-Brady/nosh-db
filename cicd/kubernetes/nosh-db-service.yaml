@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nosh-db-service
+  labels:
+    app: nosh-db
+spec:
+  selector:
+    app: nosh-db
+  ports:
+    - name: http-nosh-db
+      port: 5432
+  type: NodePort
