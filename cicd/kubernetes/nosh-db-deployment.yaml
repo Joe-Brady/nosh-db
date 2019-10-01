@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nosh-db-container
-          image: postgres
+          image: postgres:11.5-alpine
           ports:
             - containerPort: 5432
           envFrom:
